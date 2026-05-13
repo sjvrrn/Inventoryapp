@@ -6,13 +6,17 @@ import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
-    const user = usePage().props.auth.user;
+    //const user = usePage().props.auth.user;
+     const { auth } = usePage().props;
+
+    const user = auth?.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
     return (
         <div className="min-h-screen bg-gray-100">
+          
             <nav className="border-b border-gray-100 bg-white">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
@@ -24,12 +28,63 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
+                                {/*<NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
                                     Dashboard
-                                </NavLink>
+                                </NavLink> */}
+                                <nav className="mt-4">
+
+                                    <NavLink
+                                        href={route('dashboard')}
+                                        active={route().current('dashboard')}
+                                        className="block px-4 py-3 hover:bg-gray-700"
+                                    >
+                                        Dashboard
+                                    </NavLink>
+
+                                    <NavLink
+                                        href={route('products.index')}
+                                        active={route().current('products.*')}
+                                        className="block px-4 py-3 hover:bg-gray-700"
+                                    >
+                                        Products
+                                    </NavLink>
+
+                                    <NavLink
+                                        href={route('suppliers.index')}
+                                        active={route().current('suppliers.*')}
+                                        className="block px-4 py-3 hover:bg-gray-700"
+                                    >
+                                        Suppliers
+                                    </NavLink>
+
+                                    <NavLink
+                                        href={route('customers.index')}
+                                        active={route().current('customers.*')}
+                                        className="block px-4 py-3 hover:bg-gray-700"
+                                    >
+                                        Customers
+                                    </NavLink>
+
+                                    <NavLink
+                                        href={route('stock.index')}
+                                        active={route().current('stock.*')}
+                                        className="block px-4 py-3 hover:bg-gray-700"
+                                    >
+                                        Stock
+                                    </NavLink>
+
+                                    <NavLink
+                                        href={route('orders.index')}
+                                        active={route().current('orders.*')}
+                                        className="block px-4 py-3 hover:bg-gray-700"
+                                    >
+                                        Orders
+                                    </NavLink>
+
+                                </nav>
                             </div>
                         </div>
 
@@ -42,7 +97,6 @@ export default function AuthenticatedLayout({ header, children }) {
                                                 type="button"
                                                 className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
                                             >
-                                                {user.name}
 
                                                 <svg
                                                     className="-me-0.5 ms-2 h-4 w-4"
@@ -139,10 +193,10 @@ export default function AuthenticatedLayout({ header, children }) {
                     <div className="border-t border-gray-200 pb-1 pt-4">
                         <div className="px-4">
                             <div className="text-base font-medium text-gray-800">
-                                {user.name}
+                               
                             </div>
                             <div className="text-sm font-medium text-gray-500">
-                                {user.email}
+                             
                             </div>
                         </div>
 
@@ -162,15 +216,75 @@ export default function AuthenticatedLayout({ header, children }) {
                 </div>
             </nav>
 
-            {header && (
+            {/*{header && (
                 <header className="bg-white shadow">
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         {header}
                     </div>
                 </header>
-            )}
+            )}*/}
+        {/* sidebar & content*/}
+        <main className="container-fluid">
+            <div className="row">
 
-            <main>{children}</main>
+                {/* Sidebar */}
+                <div className="col-sm-2 bg-dark text-white min-vh-100 p-2">
+
+                    <h4 className="mb-4">Inventory App</h4>
+
+                    <nav className="nav flex-column">
+
+                        <Link
+                            href={route('dashboard')}
+                            className="nav-link text-white"
+                        >
+                            Dashboard
+                        </Link>
+
+                        <Link
+                            href={route('products.index')}
+                            className="nav-link text-white"
+                        >
+                            Products
+                        </Link>
+
+                        <Link
+                            href={route('suppliers.index')}
+                            className="nav-link text-white"
+                        >
+                            Suppliers
+                        </Link>
+
+                        <Link
+                            href={route('customers.index')}
+                            className="nav-link text-white"
+                        >
+                            Customers
+                        </Link>
+
+                        <Link
+                            href={route('stock.index')}
+                            className="nav-link text-white"
+                        >
+                            Stock
+                        </Link>
+
+                        <Link
+                            href={route('orders.index')}
+                            className="nav-link text-white"
+                        >
+                            Orders
+                        </Link>
+
+                    </nav>
+                </div>
+
+                {/* Page Content */}
+                <div className="col-sm-10 p-2">
+                    {children}
+                </div>
+            </div>
+        </main>
         </div>
     );
 }
